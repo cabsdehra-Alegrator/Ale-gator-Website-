@@ -6,3 +6,75 @@
 /* Admin booking pipeline and vendor response controls */
 .bookingControl{margin-bottom:14px}.adminDispatchGrid{margin-top:14px}.emptyState{margin-top:18px;padding:20px;border:1px dashed #dce4e8;border-radius:6px;color:#8b98a3;font-size:10px;line-height:1.6;background:#fafbfc}.offerList{display:grid;gap:10px;margin-top:18px}.offerCard{border:1px solid #e5eaee;border-radius:7px;padding:15px;background:#fff}.offerSelected{border-color:#a9c975;background:#fbfdf7}.offerTop{display:flex;justify-content:space-between;gap:15px;align-items:flex-start}.offerTop>div{display:grid;gap:5px}.offerTop b{font:700 13px Manrope}.offerTop span,.offerDetails span{font-size:9px;color:#8795a0}.offerTop strong{font:700 16px Manrope;white-space:nowrap}.offerDetails{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:12px}.offerActions{display:flex;align-items:center;gap:15px;margin-top:14px}.adminSecondary{border:1px solid #dce5d0;border-radius:5px;background:#f5f9ed;padding:9px 12px;color:#435b2c;font-size:9px;font-weight:700;cursor:pointer}.textAction{border:0;background:none;color:#9a6b61;font-size:9px;cursor:pointer}.allocatedTag{font-size:9px;font-weight:700;color:#597a31}.fareFields{margin:5px 0 16px}.fareFields label,.stagePicker{display:grid;gap:7px;color:#778796;font-size:8px;letter-spacing:.1em;font-weight:700}.fareFields input,.stagePicker select{height:42px;border:1px solid #e1e7eb;border-radius:5px;background:#fff;padding:10px;font:11px 'DM Sans';color:#263d51;min-width:0}.fareSummary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.fareSummary>div{background:#f6f8f8;border:1px solid #e9edef;border-radius:6px;padding:13px;display:grid;gap:7px}.fareSummary small,.allocationSummary>span:first-child{font-size:8px;letter-spacing:.1em;color:#8795a1;font-weight:700}.fareSummary b{font:700 17px Manrope}.fareSummary span{font-size:8px;color:#98a3ab}.allocationSummary{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;padding:14px;margin-top:12px;background:#f9faf8;border:1px solid #edf0e9;border-radius:6px}.allocationSummary b{font:700 11px Manrope}.allocationSummary>span:not(:first-child){font-size:9px;color:#81909b}.stagePicker{max-width:360px;margin-bottom:17px}.workflowSteps .workflowCurrent{border-color:#a9c975;background:#f7faef}.workflowSteps .workflowCurrent b{color:#567a2c}.workflowSteps .workflowCurrent span{color:#334b20}.confirmationRule{margin-top:14px;padding:12px;background:#f8f7ef;border-radius:5px;color:#7b7454;font-size:9px;line-height:1.6}.adminNotice{padding:12px 14px;border-radius:5px;background:#edf4e3;color:#506b31;font-size:10px;line-height:1.5}.adminMain button:focus-visible,.adminMain input:focus-visible,.adminMain select:focus-visible,.adminMain textarea:focus-visible{outline:2px solid #9fbd69;outline-offset:2px}
 @media(max-width:680px){.fareSummary{grid-template-columns:1fr}.offerTop{align-items:flex-start}.allocationSummary{align-items:flex-start;flex-direction:column;gap:7px}.adminDispatchGrid{gap:10px}.offerDetails{flex-direction:column;gap:7px}}
+
+
+/* North India location directory and SEO landing pages */
+.locationPage{min-height:100vh;background:#f5f7f5;color:var(--ink);padding:0 0 35px}
+.locationWrap{width:min(1160px,calc(100% - 48px));margin:0 auto}
+.locationBreadcrumb{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:22px 0;color:#8b98a1;font-size:10px}
+.locationBreadcrumb a,.locationFooter a{color:#607286}
+.locationBreadcrumb a:hover,.locationFooter a:hover{color:#243e56;text-decoration:underline}
+.locationHero{position:relative;overflow:hidden;background:var(--navy);color:#fff;border-radius:12px;padding:62px 64px;margin:0 0 58px}
+.locationHero:after{content:"";position:absolute;width:360px;height:360px;border:1px solid #ffffff12;border-radius:50%;right:-90px;top:-160px;box-shadow:0 0 0 42px #ffffff08,0 0 0 84px #ffffff05;pointer-events:none}
+.locationEyebrow{position:relative;z-index:1;color:#a9c875;font-size:9px;letter-spacing:.19em;font-weight:700;margin:0 0 12px}
+.locationHero h1{position:relative;z-index:1;font:700 clamp(38px,5vw,62px)/1.08 Manrope,sans-serif;letter-spacing:-.065em;margin:0 0 18px}
+.locationHero h1 em{font-style:normal;color:var(--lime)}
+.locationHero>p:not(.locationEyebrow){position:relative;z-index:1;max-width:690px;color:#c0cbd4;font-size:13px;line-height:1.85;margin:0 0 14px}
+.locationHero .locationNotice{max-width:760px;margin-top:25px;padding:13px 16px;border:1px solid #ffffff24;border-radius:6px;background:#ffffff09;color:#d1dbe2;font-size:10px;line-height:1.7}
+.locationDirectory{padding:0 0 60px}
+.locationSectionHeading{display:flex;justify-content:space-between;align-items:end;gap:20px;margin:0 0 22px}
+.locationSectionHeading .locationEyebrow{color:#829c55;margin-bottom:8px}
+.locationSectionHeading h2,.locationInfoStrip h2,.locationTravelDetails h2,.locationBottomCta h2{font:700 clamp(24px,3vw,33px)/1.15 Manrope,sans-serif;letter-spacing:-.055em;margin:0;color:#182f46}
+.locationSectionHeading>span,.locationSectionHeading>a{font-size:10px;color:#7b8995}
+.locationStateGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.locationStateCard{background:#fff;border:1px solid #e5eae7;border-radius:8px;padding:22px;display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+.locationCardTop{width:100%;display:flex;justify-content:space-between;gap:10px;color:#87949e;font-size:9px}
+.locationCardTop span:first-child{text-transform:uppercase;letter-spacing:.11em;font-weight:700}
+.locationStateCard h3{font:700 20px Manrope;letter-spacing:-.04em;margin:12px 0 8px}
+.locationStateCard h3 a{color:#1b334a}
+.locationStateCard>p{font-size:11px;line-height:1.7;color:#82909a;margin:0 0 16px;max-width:590px}
+.locationCityLinks{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 17px}
+.locationCityLinks a{padding:7px 9px;border-radius:4px;background:#f3f6f1;color:#50633d;font-size:9px}
+.locationCityLinks a:hover{background:#e8f0dc;color:#354c24}
+.locationExplore{margin-top:auto;color:#314b61;font-size:10px;font-weight:700}
+.locationExplore span{color:#819b55;margin-left:5px}
+.locationCityGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.locationCityCard{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid #e3e9e7;background:#fff;border-radius:7px;padding:16px;color:#233c52;min-width:0;transition:border-color .18s ease,transform .18s ease}
+.locationCityCard:hover{border-color:#b7ce91;transform:translateY(-2px)}
+.locationCityCard>span:first-child{display:grid;gap:5px;min-width:0}
+.locationCityCard strong{font:700 13px Manrope}
+.locationCityCard small{font-size:9px;color:#8996a0}
+.locationCityMarker{flex:none;width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:#f1f6e8;color:#66863b}
+.locationInfoStrip,.locationTravelDetails{background:#fff;border:1px solid #e6ebe8;border-radius:9px;padding:27px;margin:0 0 24px}
+.locationInfoStrip h2{font-size:23px;margin-bottom:20px}
+.locationInfoStrip ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.locationInfoStrip li{display:grid;gap:7px;align-content:start}
+.locationInfoStrip li strong{font:700 12px Manrope;color:#263e53}
+.locationInfoStrip li span{font-size:10px;line-height:1.7;color:#87949d}
+.locationPageActions{display:flex;justify-content:space-between;gap:15px;padding:14px 0 35px}
+.locationPageActions a{font-size:10px;font-weight:700;color:#49613a}
+.locationBottomCta{display:flex;justify-content:space-between;align-items:center;gap:25px;background:#c9ed79;border-radius:9px;padding:28px 32px;margin:10px 0 30px}
+.locationBottomCta .locationEyebrow{color:#637e38;margin-bottom:8px}
+.locationBottomCta h2{font-size:23px}
+.locationBottomCta p:not(.locationEyebrow){font-size:10px;line-height:1.65;color:#53683b;margin:8px 0 0;max-width:570px}
+.locationBottomCta>a,.locationPrimaryCta{background:#10243b;color:#fff;border-radius:5px;padding:14px 17px;font-size:10px;font-weight:700;white-space:nowrap}
+.locationBottomCta>a span,.locationPrimaryCta span{margin-left:8px;color:#c9ed79}
+.locationFooter{display:flex;justify-content:space-between;gap:15px;padding:16px 0;color:#87939b;font-size:9px;border-top:1px solid #e3e9e6}
+.locationStateHero{margin-bottom:48px}
+.locationCityHero{margin-bottom:48px}
+.locationUseCases{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}
+.locationUseCases span{padding:8px 11px;border-radius:4px;background:#ffffff12;border:1px solid #ffffff20;color:#d9e3e9;font-size:9px}
+.locationPrimaryCta{position:relative;z-index:1;display:inline-block;margin-top:8px}
+.locationTravelDetails{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center;margin-bottom:48px}
+.locationTravelDetails .locationEyebrow{color:#829c55}
+.locationTravelDetails h2{margin-bottom:10px}
+.locationTravelDetails>div:first-child>p:last-child{font-size:11px;color:#83919b;line-height:1.8;max-width:490px}
+.locationChecklist{display:grid;gap:0;border-top:1px solid #edf0ee}
+.locationChecklist p{display:flex;align-items:center;gap:13px;border-bottom:1px solid #edf0ee;padding:11px 0;margin:0;font-size:10px;color:#586d7f}
+.locationChecklist span{font:700 10px Manrope;color:#849e58}
+.coverageExplore{grid-column:2;justify-self:start;margin-top:-8px;color:#344e62;font-size:10px;font-weight:700}
+.regionList a{padding:10px 13px;border:1px solid #e0e8d8;border-radius:5px;background:#fff;color:#3f566a;font-size:10px;font-weight:600}
+.regionList a:hover{border-color:#bbd28f;background:#f9fcf4}
+@media(max-width:850px){.locationHero{padding:48px 35px}.locationCityGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.locationInfoStrip ol{grid-template-columns:1fr}.locationTravelDetails{grid-template-columns:1fr}}
+@media(max-width:680px){.locationWrap{width:calc(100% - 34px)}.locationBreadcrumb{padding:17px 0;gap:7px;font-size:9px}.locationHero{padding:40px 22px;margin-bottom:42px}.locationHero h1{font-size:42px}.locationHero>p:not(.locationEyebrow){font-size:11px}.locationSectionHeading{align-items:flex-start;flex-direction:column;gap:8px}.locationStateGrid,.locationCityGrid{grid-template-columns:1fr}.locationStateCard{padding:18px}.locationDirectory{padding-bottom:45px}.locationInfoStrip,.locationTravelDetails{padding:20px}.locationBottomCta{align-items:flex-start;flex-direction:column;padding:24px 20px}.locationBottomCta h2{font-size:21px}.locationPageActions{flex-direction:column}.locationFooter{flex-wrap:wrap}.locationFooter span{width:100%}.coverageExplore{grid-column:1;margin-top:0}}
+@media(prefers-reduced-motion:reduce){.locationCityCard{transition:none}.locationCityCard:hover{transform:none}}
