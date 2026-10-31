@@ -36,7 +36,7 @@ export default function Home() {
     <div className="topline">INTERCITY · AIRPORT · OUTSTATION <span>Travel, connected.</span></div>
     <header className="nav wrap">
       <a className="brand" href="#"><span className="mark">A</span><span>ALE-GATOR<small>YOUR JOURNEY NETWORK</small></span></a>
-      <nav><a href="#routes">Popular routes</a><a href="#process">How it works</a><a href="#partners">For partners</a></nav>
+      <nav><a href="/locations">States & cities</a><a href="#routes">Popular routes</a><a href="#process">How it works</a><a href="#partners">For partners</a></nav>
       <a className="navbutton" href="#plan">Plan a journey ↗</a>
     </header>
 
@@ -75,7 +75,7 @@ export default function Home() {
 
     <section className="assurance"><div className="wrap assuranceGrid"><div><b>Travel, without the guesswork.</b><small>A clear process from enquiry to drop-off.</small></div><div><strong>01</strong><span>Thoughtful vehicle matching</span></div><div><strong>02</strong><span>Local operator network</span></div><div><strong>03</strong><span>Coordinated trip support</span></div></div></section>
 
-    <section className="coverage"><div className="wrap coverageInner"><div><label>NORTH INDIA NETWORK</label><h2>One region. Many routes.</h2><p>Our rollout is designed to connect major cities, hill destinations and intercity corridors across the North.</p></div><div className="regionList"><span>Delhi NCR</span><span>Uttarakhand</span><span>Uttar Pradesh</span><span>Haryana</span><span>Punjab</span><span>Chandigarh</span><span>Himachal Pradesh</span><span>Rajasthan</span><span>Jammu & Kashmir</span><span>Ladakh</span></div><small className="coverageNote">Coverage is being built corridor by corridor. A trip is accepted only after local partner availability and route feasibility are confirmed.</small></div></section>
+    <section className="coverage"><div className="wrap coverageInner"><div><label>NORTH INDIA NETWORK</label><h2>One region. Many routes.</h2><p>Our rollout is designed to connect major cities, hill destinations and intercity corridors across the North.</p></div><div className="regionList"><a href="/locations/delhi-ncr">Delhi NCR</a><a href="/locations/uttarakhand">Uttarakhand</a><a href="/locations/uttar-pradesh">Uttar Pradesh</a><a href="/locations/haryana">Haryana</a><a href="/locations/punjab">Punjab</a><a href="/locations/chandigarh">Chandigarh</a><a href="/locations/himachal-pradesh">Himachal Pradesh</a><a href="/locations/rajasthan">Rajasthan</a><a href="/locations/jammu-kashmir">Jammu & Kashmir</a><a href="/locations/ladakh">Ladakh</a></div><small className="coverageNote">Coverage is being built corridor by corridor. A trip is accepted only after local partner availability and route feasibility are confirmed.</small><a className="coverageExplore" href="/locations">Browse all states & cities ↗</a></div></section>
 
     <section className="section wrap" id="routes"><div className="sectionHead"><div><label>NORTH INDIA ROUTES</label><h2>Journeys across the North.</h2><p>Explore example corridors and share your travel details for confirmation.</p></div><a href="#plan">Plan another route ↗</a></div><div className="routeGrid">{routes.map(([a,b,c])=><button key={a+b} onClick={()=>{setPickup(a);setDrop(b);window.scrollTo({top:0,behavior:"smooth"});}}><small>{c}</small><b>{a} <i>→</i> {b}</b><span>Check journey details ↗</span></button>)}</div><p className="note">Routes and distances are indicative. Final routing, availability and fare are subject to confirmation.</p></section>
 
