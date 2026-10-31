@@ -71,3 +71,17 @@ Do not broadcast customer phone numbers, personal contact details or unnecessary
 
 ## Admin dashboard prototype
 The admin UI is available at `/admin`. It includes trip and duty details, a WhatsApp Duty Desk message builder, route-group selector, vendor response entry, vendor offer comparison, vendor selection, separate customer fare and vendor payout fields, a booking-stage selector and confirmation safeguards. All records and calculations are temporary browser state and are lost on refresh. It is a front-end prototype only: no login, database persistence, real booking records, customer notifications, payment processing or automatic WhatsApp group posting is connected.
+
+
+## North India location directory
+
+The customer-facing location directory is available at /locations and is organized into:
+- /locations — directory of the 10 planned North India regions.
+- /locations/[state] — regional landing pages with links to their city pages.
+- /locations/[state]/[city] — city-level enquiry and travel-information pages.
+
+The initial data set generates 55 city URLs across Delhi NCR, Uttarakhand, Uttar Pradesh, Haryana, Punjab, Chandigarh, Himachal Pradesh, Rajasthan, Jammu & Kashmir and Ladakh. The shared content model lives in lib/locations.ts; each route uses static parameters and page-specific metadata and canonical paths.
+
+These pages describe the network roadmap and provide enquiry entry points. They do not claim that a location has confirmed live service. Actual trip acceptance remains subject to route feasibility, operating conditions and verified local partner availability. The homepage region links point into this directory.
+
+The city copy is an initial content foundation. Before scaling organic acquisition, enrich high-priority city pages with verified local route information, partner coverage, route-specific FAQs and unique editorial content. Do not add fabricated fares, distances, response times, partner counts or live-service claims.
