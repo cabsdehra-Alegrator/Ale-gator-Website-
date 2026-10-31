@@ -67,3 +67,7 @@ Do not broadcast customer phone numbers, personal contact details or unnecessary
 - Customer-facing fares and availability must be supported by approved operational data.
 - Do not promise service in a city until partner availability and fulfilment capability have been verified.
 - Vendor fulfilment remains human-coordinated through the existing WhatsApp groups in the initial phase.
+
+
+## Admin dashboard prototype
+An initial admin UI is available at `/admin`. It includes a WhatsApp Duty Desk message builder, route-group selector, message preview, copy action and booking workflow stages. It is a front-end prototype only: no login, database persistence, real booking records or automatic WhatsApp group posting is connected yet.
