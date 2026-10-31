@@ -16,7 +16,11 @@ export default function Home() {
   const [pickup, setPickup] = useState("");
   const [drop, setDrop] = useState("");
   const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [passengers, setPassengers] = useState("1-4");
   const [vehicle, setVehicle] = useState("Any suitable vehicle");
+  const [luggage, setLuggage] = useState("Standard luggage");
+  const [notes, setNotes] = useState("");
   const [message, setMessage] = useState("");
 
   function submit(e: React.FormEvent<HTMLFormElement>) {
@@ -25,7 +29,7 @@ export default function Home() {
       setMessage("Please enter your pickup, destination and travel date.");
       return;
     }
-    setMessage("Preview only: live fare checks and booking requests will be enabled after the operations backend is connected.");
+    setMessage(`Enquiry preview: ${trip} · ${pickup} to ${drop} · ${date}${time ? ` at ${time}` : ""} · ${passengers} passengers · ${vehicle}. This is not submitted or saved yet; the operations enquiry system will be enabled with the new backend.`);
   }
 
   return <main>
@@ -52,12 +56,18 @@ export default function Home() {
           <label className="inputLabel">PICKUP LOCATION<input value={pickup} onChange={e=>setPickup(e.target.value)} placeholder="Enter city or pickup address"/></label>
           <label className="inputLabel">DROP LOCATION<input value={drop} onChange={e=>setDrop(e.target.value)} placeholder="Where would you like to go?"/></label>
           <div className="two">
-            <label className="inputLabel">TRAVEL DATE<input type="date" value={date} onChange={e=>setDate(e.target.value)}/></label>
-            <label className="inputLabel">VEHICLE<select value={vehicle} onChange={e=>setVehicle(e.target.value)}><option>Any suitable vehicle</option><option>Sedan</option><option>Ertiga / SUV</option><option>Innova class</option><option>Tempo Traveller</option></select></label>
+            <label className="inputLabel">TRAVEL DATE<input type="date" value={date} onChange={e=>setDate(e.target.value)} required/></label>
+            <label className="inputLabel">REPORTING TIME<input type="time" value={time} onChange={e=>setTime(e.target.value)}/></label>
           </div>
-          <button className="submit" type="submit">Explore your ride <span>↗</span></button>
+          <div className="two">
+            <label className="inputLabel">PASSENGERS<select value={passengers} onChange={e=>setPassengers(e.target.value)}><option>1-4</option><option>5-6</option><option>7</option><option>8-12</option><option>13-17</option><option>18+</option></select></label>
+            <label className="inputLabel">VEHICLE<select value={vehicle} onChange={e=>setVehicle(e.target.value)}><option>Any suitable vehicle</option><option>Sedan</option><option>Ertiga / SUV</option><option>Innova Crysta / similar</option><option>Tempo Traveller</option></select></label>
+          </div>
+          <label className="inputLabel">LUGGAGE<select value={luggage} onChange={e=>setLuggage(e.target.value)}><option>Standard luggage</option><option>Light luggage</option><option>Extra / bulky luggage</option></select></label>
+          <label className="inputLabel">ADDITIONAL REQUIREMENTS <input value={notes} onChange={e=>setNotes(e.target.value)} placeholder="Flight / train details, return date, child seat, etc. (optional)"/></label>
+          <button className="submit" type="submit">Review journey details <span>↗</span></button>
           {message&&<p className="message" role="status">{message}</p>}
-          <small className="fineprint">No booking is confirmed until the fare and vehicle are agreed.</small>
+          <small className="fineprint">Enquiry preview only. No fare is estimated and no booking is confirmed at this stage.</small>
         </form>
       </div>
       <div className="wrap heroFoot"><span>DISCOVER</span><i/><span>CONFIRM</span><i/><span>TRAVEL</span></div>
@@ -69,7 +79,7 @@ export default function Home() {
 
     <section className="section wrap" id="routes"><div className="sectionHead"><div><label>NORTH INDIA ROUTES</label><h2>Journeys across the North.</h2><p>Explore example corridors and share your travel details for confirmation.</p></div><a href="#plan">Plan another route ↗</a></div><div className="routeGrid">{routes.map(([a,b,c])=><button key={a+b} onClick={()=>{setPickup(a);setDrop(b);window.scrollTo({top:0,behavior:"smooth"});}}><small>{c}</small><b>{a} <i>→</i> {b}</b><span>Check journey details ↗</span></button>)}</div><p className="note">Routes and distances are indicative. Final routing, availability and fare are subject to confirmation.</p></section>
 
-    <section className="process" id="process"><div className="wrap processGrid"><div><label>HOW IT WORKS</label><h2>Three steps.<br/>One smoother journey.</h2><p>Every enquiry is reviewed by our operations team before a trip is confirmed.</p></div><div className="steps"><article><b>01</b><div><h3>Share your journey</h3><p>Enter your pickup, destination, date and vehicle preference.</p></div></article><article><b>02</b><div><h3>We coordinate local availability</h3><p>Our operations team checks suitable vehicles with trusted local travel partners for your route.</p></div></article><article><b>03</b><div><h3>Confirm and travel</h3><p>Your trip is confirmed after a suitable operator and vehicle have been allocated and the fare is agreed.</p></div></article></div></div></section>
+    <section className="process" id="process"><div className="wrap processGrid"><div><label>HOW IT WORKS</label><h2>Three steps.<br/>One smoother journey.</h2><p>Every enquiry is reviewed by our operations team before a trip is confirmed.</p></div><div className="steps"><article><b>01</b><div><h3>Share your journey</h3><p>Enter your pickup, destination, date, timing and vehicle requirements.</p></div></article><article><b>02</b><div><h3>We coordinate local availability</h3><p>Our operations team checks suitable vehicles with trusted local travel partners for your route.</p></div></article><article><b>03</b><div><h3>Confirm and travel</h3><p>Your trip is confirmed after a suitable operator and vehicle have been allocated and the fare is agreed.</p></div></article></div></div></section>
 
     <section className="partner" id="partners"><div className="wrap partnerInner"><div><label>LOCAL PARTNER NETWORK</label><h2>Local operators. Central coordination.</h2><p>Our operations team coordinates each booking with route-relevant local partners and confirms the assigned vehicle before the trip.</p></div><a href="#plan">Plan a journey ↗</a></div></section>
     <footer><div className="wrap footer"><a className="brand" href="#"><span className="mark">A</span><span>ALE-GATOR<small>YOUR JOURNEY NETWORK</small></span></a><p>Connecting customers with local cab operators for intercity, airport and outstation journeys across North India.</p><small>© {new Date().getFullYear()} Ale-gator. Availability and fares are subject to confirmation.</small></div></footer>
