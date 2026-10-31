@@ -7,10 +7,9 @@ type PageProps = { params: Promise<{ state: string; city: string }> };
 
 export const dynamicParams = false;
 
-export function generateStaticParams() {
-  return LOCATION_STATES.flatMap((state) =>
-    state.cities.map((city) => ({ state: state.slug, city: city.slug }))
-  );
+export function generateStaticParams({ params }: { params: { state: string } }) {
+  const state = LOCATION_STATES.find((item) => item.slug === params.state);
+  return state ? state.cities.map((city) => ({ city: city.slug })) : [];
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
