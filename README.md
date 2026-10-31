@@ -28,7 +28,7 @@ Coverage is planned corridor by corridor. A location must not be presented as li
 - `npm run dev`
 
 ## Current implementation
-The repository contains a responsive customer-facing landing page, trip enquiry preview, North India region roadmap and example route shortcuts. The enquiry form is not connected to a backend and does not submit or store bookings yet.
+The repository contains a responsive customer-facing landing page, expanded trip enquiry preview, North India region roadmap and example route shortcuts. The enquiry form validates and previews the trip details in the browser, but does not submit or store bookings yet.
 
 ## Booking fulfilment model — WhatsApp partner groups
 The initial operating model uses the existing route-based vendor WhatsApp groups. A separate vendor app, vendor login or vendor dashboard is not part of the first release.
@@ -70,4 +70,4 @@ Do not broadcast customer phone numbers, personal contact details or unnecessary
 
 
 ## Admin dashboard prototype
-An initial admin UI is available at `/admin`. It includes a WhatsApp Duty Desk message builder, route-group selector, message preview, copy action and booking workflow stages. It is a front-end prototype only: no login, database persistence, real booking records or automatic WhatsApp group posting is connected yet.
+The admin UI is available at `/admin`. It includes trip and duty details, a WhatsApp Duty Desk message builder, route-group selector, vendor response entry, vendor offer comparison, vendor selection, separate customer fare and vendor payout fields, a booking-stage selector and confirmation safeguards. All records and calculations are temporary browser state and are lost on refresh. It is a front-end prototype only: no login, database persistence, real booking records, customer notifications, payment processing or automatic WhatsApp group posting is connected.
