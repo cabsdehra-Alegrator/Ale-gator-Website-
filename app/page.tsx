@@ -3,12 +3,12 @@
 import { useState } from "react";
 
 const routes = [
-  ["Delhi", "Dehradun", "Popular intercity route"],
-  ["Delhi", "Rishikesh", "Outstation journey"],
-  ["Dehradun", "Mussoorie", "Hill transfer"],
-  ["Delhi", "Nainital", "Weekend getaway"],
-  ["Haridwar", "Chopta", "Uttarakhand journey"],
-  ["Chandigarh", "Dehradun", "Intercity transfer"],
+  ["Delhi NCR", "Dehradun", "Uttarakhand corridor"],
+  ["Delhi", "Jaipur", "Rajasthan corridor"],
+  ["Chandigarh", "Shimla", "Himachal corridor"],
+  ["Delhi", "Amritsar", "Punjab corridor"],
+  ["Lucknow", "Agra", "Uttar Pradesh corridor"],
+  ["Delhi", "Srinagar", "Jammu & Kashmir corridor"],
 ];
 
 export default function Home() {
@@ -40,9 +40,9 @@ export default function Home() {
       <div className="wrap heroGrid">
         <div className="intro">
           <div className="eyebrow"><i/> A BETTER WAY TO GET THERE</div>
-          <h1>Every journey<br/><em>starts with a connection.</em></h1>
-          <p>From airport pickups to long-distance road trips, plan your next ride through one connected travel network.</p>
-          <div className="promises"><span>✓ Clear trip details</span><span>✓ Local travel partners</span><span>✓ Fare confirmed before booking</span></div>
+          <h1>North India,<br/><em>connected by road.</em></h1>
+          <p>Plan intercity, airport and outstation journeys through a growing network of local cab partners across North India.</p>
+          <div className="promises"><span>✓ Routes across key North Indian regions</span><span>✓ Local travel partner network</span><span>✓ Fare and vehicle confirmed before booking</span></div>
           <small className="disclaimer">Vehicle availability and final fare are confirmed by the operations team before a booking is accepted.</small>
         </div>
 
@@ -65,11 +65,13 @@ export default function Home() {
 
     <section className="assurance"><div className="wrap assuranceGrid"><div><b>Travel, without the guesswork.</b><small>A clear process from enquiry to drop-off.</small></div><div><strong>01</strong><span>Thoughtful vehicle matching</span></div><div><strong>02</strong><span>Local operator network</span></div><div><strong>03</strong><span>Coordinated trip support</span></div></div></section>
 
-    <section className="section wrap" id="routes"><div className="sectionHead"><div><label>FIND YOUR ROUTE</label><h2>Popular journeys.</h2><p>Choose a starting point and tell us when you want to travel.</p></div><a href="#plan">Plan another route ↗</a></div><div className="routeGrid">{routes.map(([a,b,c])=><button key={a+b} onClick={()=>{setPickup(a);setDrop(b);window.scrollTo({top:0,behavior:"smooth"});}}><small>{c}</small><b>{a} <i>→</i> {b}</b><span>Check journey details ↗</span></button>)}</div><p className="note">Routes and distances are indicative. Final routing, availability and fare are subject to confirmation.</p></section>
+    <section className="coverage"><div className="wrap coverageInner"><div><label>NORTH INDIA NETWORK</label><h2>One region. Many routes.</h2><p>Our rollout is designed to connect major cities, hill destinations and intercity corridors across the North.</p></div><div className="regionList"><span>Delhi NCR</span><span>Uttarakhand</span><span>Uttar Pradesh</span><span>Haryana</span><span>Punjab</span><span>Chandigarh</span><span>Himachal Pradesh</span><span>Rajasthan</span><span>Jammu & Kashmir</span><span>Ladakh</span></div><small className="coverageNote">Coverage is being built corridor by corridor. A trip is accepted only after local partner availability and route feasibility are confirmed.</small></div></section>
+
+    <section className="section wrap" id="routes"><div className="sectionHead"><div><label>NORTH INDIA ROUTES</label><h2>Journeys across the North.</h2><p>Explore example corridors and share your travel details for confirmation.</p></div><a href="#plan">Plan another route ↗</a></div><div className="routeGrid">{routes.map(([a,b,c])=><button key={a+b} onClick={()=>{setPickup(a);setDrop(b);window.scrollTo({top:0,behavior:"smooth"});}}><small>{c}</small><b>{a} <i>→</i> {b}</b><span>Check journey details ↗</span></button>)}</div><p className="note">Routes and distances are indicative. Final routing, availability and fare are subject to confirmation.</p></section>
 
     <section className="process" id="process"><div className="wrap processGrid"><div><label>HOW IT WORKS</label><h2>Three steps.<br/>One smoother journey.</h2><p>We keep the process straightforward, with trip details agreed before confirmation.</p></div><div className="steps"><article><b>01</b><div><h3>Share your journey</h3><p>Enter your pickup, destination, date and vehicle preference.</p></div></article><article><b>02</b><div><h3>Review your proposal</h3><p>Our team checks the route, vehicle suitability and partner availability.</p></div></article><article><b>03</b><div><h3>Confirm and travel</h3><p>Once the details are agreed, the trip is coordinated with the assigned operator.</p></div></article></div></div></section>
 
-    <section className="partner" id="partners"><div className="wrap partnerInner"><div><label>FOR LOCAL CAB OPERATORS</label><h2>Grow with the network.</h2><p>We're building a connected network of verified local travel partners across India.</p></div><a href="mailto:partners@ale-gator.com">Partner enquiries ↗</a></div></section>
-    <footer><div className="wrap footer"><a className="brand" href="#"><span className="mark">A</span><span>ALE-GATOR<small>YOUR JOURNEY NETWORK</small></span></a><p>Connecting customers with local cab operators for intercity, airport and outstation travel.</p><small>© {new Date().getFullYear()} Ale-gator. Availability and fares are subject to confirmation.</small></div></footer>
+    <section className="partner" id="partners"><div className="wrap partnerInner"><div><label>FOR LOCAL CAB OPERATORS</label><h2>Grow with the network.</h2><p>We're building a connected network of verified local travel partners across North India, with regional expansion planned in stages.</p></div><a href="mailto:partners@ale-gator.com">Partner enquiries ↗</a></div></section>
+    <footer><div className="wrap footer"><a className="brand" href="#"><span className="mark">A</span><span>ALE-GATOR<small>YOUR JOURNEY NETWORK</small></span></a><p>Connecting customers with local cab operators for intercity, airport and outstation journeys across North India.</p><small>© {new Date().getFullYear()} Ale-gator. Availability and fares are subject to confirmation.</small></div></footer>
   </main>;
 }

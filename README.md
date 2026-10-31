@@ -1,11 +1,26 @@
-# Ale-gator Website
+# Ale-gator — North India Cab Network
 
-Customer-facing cab aggregation platform, initially focused on Uttarakhand and Delhi NCR with a roadmap for pan-India coverage.
+Ale-gator is an independent cab aggregation platform designed to connect customers with local travel partners for intercity, airport and outstation journeys across North India.
 
-## Stack
+## Regional rollout focus
+The initial network roadmap covers:
+- Delhi NCR
+- Uttarakhand
+- Uttar Pradesh
+- Haryana
+- Punjab and Chandigarh
+- Himachal Pradesh
+- Rajasthan
+- Jammu & Kashmir
+- Ladakh
+
+Coverage is planned corridor by corridor. A location must not be presented as live service coverage until verified partner capacity, operating rules and customer support are in place.
+
+## Technology
 - Next.js App Router
 - React and TypeScript
 - Responsive CSS
+- Planned: Supabase database, authentication and role-based access
 
 ## Local development
 - Node.js 20.9+
@@ -13,14 +28,18 @@ Customer-facing cab aggregation platform, initially focused on Uttarakhand and D
 - `npm run dev`
 
 ## Current implementation
-The initial release contains a responsive landing page, route shortcuts and a front-end enquiry preview. The form is not connected to a backend and does not submit or store bookings yet.
+The repository currently contains a responsive customer-facing landing page, trip enquiry preview, North India region roadmap and example route shortcuts. The enquiry form is not connected to a backend and does not submit or store bookings yet.
 
 ## Next milestones
 1. Supabase database, authentication and role-based access.
-2. Approved fare engine and route rules.
-3. Admin booking dashboard and operations workflow.
-4. Partner onboarding, verification and allocation.
+2. Approved route and vehicle fare engine.
+3. Central admin booking dashboard and operations workflow.
+4. Partner onboarding, verification and location-wise allocation.
 5. Payment gateway and WhatsApp notifications.
-6. SEO landing pages, analytics and production deployment.
+6. SEO landing pages for validated North India corridors.
+7. Analytics, monitoring, quality assurance and production deployment.
 
-Partner vehicles must not be represented as an owned fleet. Customer-facing fares and availability must be confirmed using approved operational data.
+## Operating principles
+- Partner vehicles must not be represented as an owned fleet.
+- Customer-facing fares and availability must be supported by approved operational data.
+- Do not promise service in a city until partner availability and fulfilment capability have been verified.
