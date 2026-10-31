@@ -5,11 +5,7 @@ import { LOCATION_STATES, getLocationState } from "@/lib/locations";
 
 type PageProps = { params: Promise<{ state: string }> };
 
-export const dynamicParams = false;
 
-export function generateStaticParams() {
-  return LOCATION_STATES.map((state) => ({ state: state.slug }));
-}
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { state: slug } = await params;
