@@ -78,3 +78,41 @@
 @media(max-width:850px){.locationHero{padding:48px 35px}.locationCityGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.locationInfoStrip ol{grid-template-columns:1fr}.locationTravelDetails{grid-template-columns:1fr}}
 @media(max-width:680px){.locationWrap{width:calc(100% - 34px)}.locationBreadcrumb{padding:17px 0;gap:7px;font-size:9px}.locationHero{padding:40px 22px;margin-bottom:42px}.locationHero h1{font-size:42px}.locationHero>p:not(.locationEyebrow){font-size:11px}.locationSectionHeading{align-items:flex-start;flex-direction:column;gap:8px}.locationStateGrid,.locationCityGrid{grid-template-columns:1fr}.locationStateCard{padding:18px}.locationDirectory{padding-bottom:45px}.locationInfoStrip,.locationTravelDetails{padding:20px}.locationBottomCta{align-items:flex-start;flex-direction:column;padding:24px 20px}.locationBottomCta h2{font-size:21px}.locationPageActions{flex-direction:column}.locationFooter{flex-wrap:wrap}.locationFooter span{width:100%}.coverageExplore{grid-column:1;margin-top:0}}
 @media(prefers-reduced-motion:reduce){.locationCityCard{transition:none}.locationCityCard:hover{transform:none}}
+
+
+/* Researched editorial content for priority city pages */
+.cityEditorialIntro{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:stretch;margin:0 0 48px}
+.cityEditorialIntro>div{padding:8px 0}
+.cityEditorialIntro .locationEyebrow,.cityPlanningPanel .locationEyebrow{color:#829c55}
+.cityEditorialIntro h2,.cityPlanningPanel h2{font:700 clamp(24px,3vw,32px)/1.17 Manrope;letter-spacing:-.055em;color:#1a334b;margin:0 0 13px}
+.cityEditorialIntro>div>p:last-child{font-size:12px;line-height:1.85;color:#748493;max-width:630px;margin:0}
+.cityPickupPanel{border:1px solid #e4eae6;background:#fff;border-radius:8px;padding:23px;display:flex;flex-direction:column;justify-content:center}
+.cityPanelLabel{font-size:8px;letter-spacing:.16em;font-weight:700;color:#829c55}
+.cityPickupPanel p{font-size:11px;line-height:1.8;color:#718191;margin:11px 0 0}
+.cityRouteGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.cityRouteCard{background:#fff;border:1px solid #e4eae6;border-radius:8px;padding:20px;display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+.cityRouteCard h3{font:700 15px/1.4 Manrope;color:#243c52;margin:0 0 9px}
+.cityRouteCard>p{font-size:10px;line-height:1.75;color:#80909b;margin:0 0 15px}
+.cityRouteLinks{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto}
+.cityRouteLinks a{font-size:9px;font-weight:700;color:#587338;background:#f2f6eb;border-radius:4px;padding:7px 9px}
+.cityRouteLinks a:hover{background:#e6efd8;color:#3f5b25}
+.cityContentDisclaimer{margin:13px 0 0;font-size:9px;line-height:1.6;color:#9aa5ac}
+.cityPlanningGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 48px}
+.cityPlanningPanel{background:#fff;border:1px solid #e5eae7;border-radius:8px;padding:24px}
+.cityPlanningPanel h2{font-size:22px;margin-bottom:16px}
+.cityPlanningPanel ul{padding-left:17px;margin:0;display:grid;gap:12px}
+.cityPlanningPanel li{font-size:10px;line-height:1.7;color:#758694;padding-left:3px}
+.cityEnquiryPanel .locationChecklist{margin-top:4px}
+.cityFaqSection{margin:0 0 34px}
+.cityFaqList{display:grid;gap:8px}
+.cityFaqItem{border:1px solid #e4eae6;background:#fff;border-radius:7px;padding:0 18px}
+.cityFaqItem summary{position:relative;cursor:pointer;list-style:none;padding:16px 28px 16px 0;color:#273f55;font:700 11px/1.5 Manrope}
+.cityFaqItem summary::-webkit-details-marker{display:none}
+.cityFaqItem summary:after{content:"+";position:absolute;right:0;top:14px;color:#819a55;font:500 19px Manrope}
+.cityFaqItem[open] summary:after{content:"−"}
+.cityFaqItem summary:focus-visible{outline:2px solid #9fbd69;outline-offset:3px;border-radius:3px}
+.cityFaqItem p{font-size:10px;line-height:1.8;color:#7c8a96;margin:0;padding:0 0 16px;max-width:900px}
+.cityOfficialSource{border-top:1px solid #e3e9e6;padding:18px 0 30px;font-size:9px;line-height:1.7;color:#8b989f}
+.cityOfficialSource a{color:#4f6933;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+@media(max-width:850px){.cityEditorialIntro{grid-template-columns:1fr;gap:15px}.cityRouteGrid{grid-template-columns:1fr 1fr}}
+@media(max-width:680px){.cityEditorialIntro{margin-bottom:38px}.cityPickupPanel,.cityPlanningPanel{padding:19px}.cityRouteGrid,.cityPlanningGrid{grid-template-columns:1fr}.cityRouteCard{padding:18px}.cityPlanningGrid{gap:10px;margin-bottom:38px}.cityPlanningPanel h2{font-size:21px}.cityFaqItem{padding:0 14px}.cityFaqItem summary{font-size:10px}}
