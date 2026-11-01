@@ -119,7 +119,7 @@ const CITY_CONTENT: Record<string, CityTravelContent> = {
     tripPatterns: [
       { title: "Haridwar to Rishikesh", detail: "Combine the two Ganga-side destinations in one enquiry if you need a transfer with time for visits at each location.", links: [{ label: "Rishikesh", href: "/locations/uttarakhand/rishikesh" }] },
       { title: "Haridwar to Dehradun and Mussoorie", detail: "A route can continue from the plains to Dehradun and the hill station. Specify whether you want a direct transfer or sightseeing en route.", links: [{ label: "Dehradun", href: "/locations/uttarakhand/dehradun" }, { label: "Mussoorie", href: "/locations/uttarakhand/mussoorie" }] },
-      { title: "Haridwar to the Char Dham region", detail: "For a pilgrimage itinerary, provide registration status where relevant, the full destination sequence and planned night halts. Road and seasonal conditions require careful review.", links: [{ label: "Joshimath", href: "/locations/uttarakhand/joshimath" }] }
+      { title: "Haridwar to Garhwal pilgrimage routes", detail: "For a pilgrimage itinerary, provide registration status where relevant, the full destination sequence and planned night halts. Road and seasonal conditions require careful review.", links: [{ label: "Joshimath", href: "/locations/uttarakhand/joshimath" }] }
     ],
     planningNotes: [
       "If you plan to attend the evening Ganga Aarti at Har Ki Pauri, state the time and agree on a nearby meeting point in advance.",
