@@ -6,6 +6,12 @@ import { getCityTravelContent } from "@/lib/city-content";
 
 type PageProps = { params: Promise<{ state: string; city: string }> };
 
+function toMetaDescription(value: string) {
+  const normalized = value.replace(/\s+/g, " ").trim();
+  if (normalized.length <= 155) return normalized;
+  return normalized.slice(0, 152).replace(/\s+\S*$/, "") + "...";
+}
+
 export const dynamicParams = false;
 
 export function generateStaticParams({ params }: { params: { state: string } }) {
@@ -21,7 +27,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const travelContent = getCityTravelContent(city.slug);
   return {
     title: city.name + " Cab Enquiry & Outstation Travel | " + state.name + " | Ale-gator",
-    description: (travelContent?.overview ?? city.summary) + " Ale-gator verifies route feasibility and partner availability before confirming a trip.",
+    description: toMetaDescription((travelContent?.overview ?? city.summary) + " Route and local partner availability are checked before booking."),
     alternates: { canonical: "/locations/" + state.slug + "/" + city.slug },
     keywords: [city.name + " cab enquiry", city.name + " outstation travel", city.name + " intercity cab"]
   };
