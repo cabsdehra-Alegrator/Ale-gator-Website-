@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LOCATION_STATES, getLocationCity } from "@/lib/locations";
+import { getCityTravelContent } from "@/lib/city-content";
 
 type PageProps = { params: Promise<{ state: string; city: string }> };
 
@@ -17,9 +18,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const result = getLocationCity(stateSlug, citySlug);
   if (!result) return { title: "City not found | Ale-gator" };
   const { state, city } = result;
+  const travelContent = getCityTravelContent(city.slug);
   return {
     title: city.name + " Cab Enquiry & Outstation Travel | " + state.name + " | Ale-gator",
-    description: city.summary + " Ale-gator checks route feasibility and local partner availability before confirming a fare or booking.",
+    description: (travelContent?.overview ?? city.summary) + " Ale-gator verifies route feasibility and partner availability before confirming a trip.",
     alternates: { canonical: "/locations/" + state.slug + "/" + city.slug },
     keywords: [city.name + " cab enquiry", city.name + " outstation travel", city.name + " intercity cab"]
   };
@@ -30,10 +32,23 @@ export default async function CityLocationPage({ params }: PageProps) {
   const result = getLocationCity(stateSlug, citySlug);
   if (!result) notFound();
   const { state, city } = result;
+  const travelContent = getCityTravelContent(city.slug);
   const otherCities = state.cities.filter((item) => item.slug !== city.slug).slice(0, 6);
+
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://ale-gator.com/" },
+      { "@type": "ListItem", position: 2, name: "States & cities", item: "https://ale-gator.com/locations" },
+      { "@type": "ListItem", position: 3, name: state.name, item: "https://ale-gator.com/locations/" + state.slug },
+      { "@type": "ListItem", position: 4, name: city.name, item: "https://ale-gator.com/locations/" + state.slug + "/" + city.slug }
+    ]
+  };
 
   return (
     <main className="locationPage">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, "\\u003c") }} />
       <div className="locationWrap">
         <nav className="locationBreadcrumb" aria-label="Breadcrumb">
           <Link href="/">Home</Link><span>/</span><Link href="/locations">States & cities</Link><span>/</span><Link href={"/locations/" + state.slug}>{state.name}</Link><span>/</span><span>{city.name}</span>
@@ -50,10 +65,84 @@ export default async function CityLocationPage({ params }: PageProps) {
           <Link className="locationPrimaryCta" href="/#plan">Plan a journey from {city.name} <span aria-hidden="true">↗</span></Link>
         </header>
 
-        <section className="locationTravelDetails">
-          <div><p className="locationEyebrow">YOUR JOURNEY</p><h2>Start with your exact route.</h2><p>For a useful enquiry, include the pickup area, full destination, travel date, reporting time, passenger count, luggage and any intermediate stops.</p></div>
-          <div className="locationChecklist"><p><span>01</span> Pickup and drop locations</p><p><span>02</span> Date, time and trip type</p><p><span>03</span> Passenger and vehicle requirements</p><p><span>04</span> Return date or extra stops, where applicable</p></div>
-        </section>
+        {travelContent ? (
+          <>
+            <section className="cityEditorialIntro" aria-labelledby="city-editorial-heading">
+              <div>
+                <p className="locationEyebrow">LOCAL JOURNEY GUIDE</p>
+                <h2 id="city-editorial-heading">{travelContent.heading}</h2>
+                <p>{travelContent.overview}</p>
+              </div>
+              <aside className="cityPickupPanel">
+                <span className="cityPanelLabel">PICKUP PLANNING</span>
+                <p>{travelContent.pickupGuidance}</p>
+              </aside>
+            </section>
+
+            <section className="locationDirectory" aria-labelledby="city-routes-heading">
+              <div className="locationSectionHeading">
+                <div><p className="locationEyebrow">ROUTE IDEAS</p><h2 id="city-routes-heading">Journey patterns to explore</h2></div>
+                <span>Examples for planning</span>
+              </div>
+              <div className="cityRouteGrid">
+                {travelContent.tripPatterns.map((pattern) => (
+                  <article className="cityRouteCard" key={pattern.title}>
+                    <h3>{pattern.title}</h3>
+                    <p>{pattern.detail}</p>
+                    {pattern.links && (
+                      <div className="cityRouteLinks">
+                        {pattern.links.map((item) => <Link href={item.href} key={item.href}>{item.label} ↗</Link>)}
+                      </div>
+                    )}
+                  </article>
+                ))}
+              </div>
+              <p className="cityContentDisclaimer">These are itinerary ideas, not confirmed services or fixed routes. Each request is checked for current road conditions, operating suitability and partner availability.</p>
+            </section>
+
+            <section className="cityPlanningGrid" aria-label="Planning notes and enquiry checklist">
+              <div className="cityPlanningPanel">
+                <p className="locationEyebrow">BEFORE YOU ENQUIRE</p>
+                <h2>Details that help us plan correctly</h2>
+                <ul>{travelContent.planningNotes.map((note) => <li key={note}>{note}</li>)}</ul>
+              </div>
+              <div className="cityPlanningPanel cityEnquiryPanel">
+                <p className="locationEyebrow">YOUR ENQUIRY CHECKLIST</p>
+                <h2>Share the full requirement</h2>
+                <div className="locationChecklist">
+                  <p><span>01</span> Exact pickup and drop addresses</p>
+                  <p><span>02</span> Travel date and reporting time</p>
+                  <p><span>03</span> Passenger count and luggage</p>
+                  <p><span>04</span> Sightseeing stops and overnight halts</p>
+                  <p><span>05</span> Return journey or final drop details</p>
+                </div>
+              </div>
+            </section>
+
+            <section className="cityFaqSection" aria-labelledby="city-faq-heading">
+              <div className="locationSectionHeading">
+                <div><p className="locationEyebrow">COMMON QUESTIONS</p><h2 id="city-faq-heading">{city.name} cab enquiry FAQs</h2></div>
+              </div>
+              <div className="cityFaqList">
+                {travelContent.faqs.map((faq) => (
+                  <details className="cityFaqItem" key={faq.question}>
+                    <summary>{faq.question}</summary>
+                    <p>{faq.answer}</p>
+                  </details>
+                ))}
+              </div>
+            </section>
+
+            {travelContent.officialSource && (
+              <p className="cityOfficialSource">For destination information, local visitor guidance and current restrictions, refer to: <a href={travelContent.officialSource.href} target="_blank" rel="noopener noreferrer">{travelContent.officialSource.label} ↗</a></p>
+            )}
+          </>
+        ) : (
+          <section className="locationTravelDetails">
+            <div><p className="locationEyebrow">YOUR JOURNEY</p><h2>Start with your exact route.</h2><p>For a useful enquiry, include the pickup area, full destination, travel date, reporting time, passenger count, luggage and any intermediate stops. This city page is part of the regional directory; service is confirmed only after route and partner checks.</p></div>
+            <div className="locationChecklist"><p><span>01</span> Pickup and drop locations</p><p><span>02</span> Date, time and trip type</p><p><span>03</span> Passenger and vehicle requirements</p><p><span>04</span> Return date or extra stops, where applicable</p></div>
+          </section>
+        )}
 
         {otherCities.length > 0 && (
           <section className="locationDirectory" aria-labelledby="more-cities-heading">
