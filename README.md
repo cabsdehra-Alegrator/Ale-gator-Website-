@@ -85,3 +85,18 @@ The initial data set generates 55 city URLs across Delhi NCR, Uttarakhand, Uttar
 These pages describe the network roadmap and provide enquiry entry points. They do not claim that a location has confirmed live service. Actual trip acceptance remains subject to route feasibility, operating conditions and verified local partner availability. The homepage region links point into this directory.
 
 The city copy is an initial content foundation. Before scaling organic acquisition, enrich high-priority city pages with verified local route information, partner coverage, route-specific FAQs and unique editorial content. Do not add fabricated fares, distances, response times, partner counts or live-service claims.
+
+
+## Priority city travel guides
+
+Fifteen priority city pages now include locally differentiated travel guidance in `lib/city-content.ts`:
+- Delhi, Gurugram and Noida
+- Dehradun, Rishikesh, Haridwar, Mussoorie, Nainital and Haldwani
+- Chandigarh, Shimla and Manali
+- Jaipur, Lucknow and Agra
+
+Each curated page has a distinct introduction, pickup-planning notes, example journey patterns, a practical enquiry checklist and city-specific FAQs. Where a suitable government tourism or district reference exists, the page links to that source for destination or visitor information. These links are references, not a substitute for checking current local orders, timings, permits or road conditions.
+
+The remaining city pages retain the regional directory foundation and should be enriched in later batches with verified, locally useful material. Do not expand location pages by duplicating generic text or by inventing live service coverage, operators, prices, route times or availability.
+
+The page metadata descriptions are kept within a concise search-snippet length. Canonical paths remain relative until the production domain is finalized; domain-dependent sitemap and structured-data URLs should only be configured after the correct production hostname is confirmed.
