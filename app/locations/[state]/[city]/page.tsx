@@ -35,20 +35,8 @@ export default async function CityLocationPage({ params }: PageProps) {
   const travelContent = getCityTravelContent(city.slug);
   const otherCities = state.cities.filter((item) => item.slug !== city.slug).slice(0, 6);
 
-  const breadcrumbSchema = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: "https://ale-gator.com/" },
-      { "@type": "ListItem", position: 2, name: "States & cities", item: "https://ale-gator.com/locations" },
-      { "@type": "ListItem", position: 3, name: state.name, item: "https://ale-gator.com/locations/" + state.slug },
-      { "@type": "ListItem", position: 4, name: city.name, item: "https://ale-gator.com/locations/" + state.slug + "/" + city.slug }
-    ]
-  };
-
   return (
     <main className="locationPage">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, "\\u003c") }} />
       <div className="locationWrap">
         <nav className="locationBreadcrumb" aria-label="Breadcrumb">
           <Link href="/">Home</Link><span>/</span><Link href="/locations">States & cities</Link><span>/</span><Link href={"/locations/" + state.slug}>{state.name}</Link><span>/</span><span>{city.name}</span>
