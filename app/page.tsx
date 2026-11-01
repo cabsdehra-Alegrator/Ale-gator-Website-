@@ -23,6 +23,7 @@ export default function Home() {
   const [luggage, setLuggage] = useState("Standard luggage");
   const [notes, setNotes] = useState("");
   const [message, setMessage] = useState("");
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -34,25 +35,25 @@ export default function Home() {
   }
 
   return <main>
-    <div className="topline">INTERCITY · AIRPORT · OUTSTATION <span>Travel, connected.</span></div>
+    <div className="topline"><span>✦ &nbsp; A simpler way to book road travel</span><span>For travellers and mobility partners ↗</span></div>
     <header className="nav wrap">
       <a className="brand" href="#"><span className="mark">A</span><span>ALE-GATOR<small>YOUR JOURNEY NETWORK</small></span></a>
-      <nav><Link href="/locations">States & cities</Link><a href="#routes">Popular routes</a><a href="#process">How it works</a><a href="#partners">For partners</a></nav>
-      <a className="navbutton" href="#plan">Plan a journey ↗</a>
+      <nav className={mobileOpen ? "navLinks navLinksOpen" : "navLinks"} onClick={()=>setMobileOpen(false)}><Link href="/locations">Services</Link><a href="#routes">Popular routes</a><a href="#process">How it works</a><a href="#partners">Partner network</a></nav>
+      <div className="navActions"><a className="partnerLink" href="#partners">For partners ↗</a><a className="navbutton" href="#plan">Get a quote <span>→</span></a><button className="menuToggle" type="button" aria-label="Toggle navigation" aria-expanded={mobileOpen} onClick={()=>setMobileOpen(!mobileOpen)}>{mobileOpen ? "×" : "☰"}</button></div>
     </header>
 
     <section className="hero">
       <div className="wrap heroGrid">
         <div className="intro">
-          <div className="eyebrow"><i/> A BETTER WAY TO GET THERE</div>
-          <h1>North India,<br/><em>connected by road.</em></h1>
-          <p>Plan intercity, airport and outstation journeys through a growing network of local cab partners across North India.</p>
-          <div className="promises"><span>✓ Routes across key North Indian regions</span><span>✓ Local travel partner network</span><span>✓ Fare and vehicle confirmed before booking</span></div>
-          <small className="disclaimer">Vehicle availability and final fare are confirmed by the operations team before a booking is accepted.</small>
+          <div className="eyebrow"><i/> THE ROAD, MADE SIMPLE</div>
+          <h1>Go further.<br/><em>Worry less.</em></h1>
+          <p>Your next road journey, coordinated end to end. One booking experience backed by a network of local travel partners.</p>
+          <div className="promises"><span>One point of coordination</span><span>From the first quote to trip completion</span><span>Built around clear quotes, partner checks and responsive support</span></div>
+          <small className="disclaimer">Designed for the way India travels — intercity, airport, hourly and outstation journeys.</small>
         </div>
 
-        <form className="booking" id="plan" onSubmit={submit}>
-          <div className="formTop"><div><label>LET'S PLAN YOUR RIDE</label><h2>Where are you headed?</h2></div><b>01 <small>/ 02</small></b></div>
+        <div className="bookingStage"><div className="routeIllustration" aria-hidden="true"><div className="mapLabel mapLabelOne">✦ &nbsp; One booking. One team.</div><div className="mapPin mapPinStart">●</div><div className="mapPin mapPinEnd">●</div><div className="mapCar">↗</div><div className="mapLabel mapLabelTwo">↗ &nbsp; Road trips, coordinated.</div><svg viewBox="0 0 560 210" preserveAspectRatio="none"><path d="M-10 150 C70 90 105 170 180 118 S310 52 365 95 S455 148 575 55" /><path d="M-10 185 C90 145 140 200 230 152 S390 88 570 140" /></svg></div><form className="booking" id="plan" onSubmit={submit}>
+          <div className="formTop"><div><label>01 / YOUR JOURNEY</label><h2>Where are we going?</h2></div><b className="formIcon">↗</b></div>
           <div className="tabs">{["One way","Round trip","Airport"].map(x=><button type="button" className={trip===x?"selected":""} onClick={()=>setTrip(x)} key={x}>{x}</button>)}</div>
           <label className="inputLabel">PICKUP LOCATION<input value={pickup} onChange={e=>setPickup(e.target.value)} placeholder="Enter city or pickup address"/></label>
           <label className="inputLabel">DROP LOCATION<input value={drop} onChange={e=>setDrop(e.target.value)} placeholder="Where would you like to go?"/></label>
@@ -66,12 +67,12 @@ export default function Home() {
           </div>
           <label className="inputLabel">LUGGAGE<select value={luggage} onChange={e=>setLuggage(e.target.value)}><option>Standard luggage</option><option>Light luggage</option><option>Extra / bulky luggage</option></select></label>
           <label className="inputLabel">ADDITIONAL REQUIREMENTS <input value={notes} onChange={e=>setNotes(e.target.value)} placeholder="Flight / train details, return date, child seat, etc. (optional)"/></label>
-          <button className="submit" type="submit">Review journey details <span>↗</span></button>
+          <button className="submit" type="submit">Get my trip quote <span>→</span></button>
           {message&&<p className="message" role="status">{message}</p>}
           <small className="fineprint">Enquiry preview only. No fare is estimated and no booking is confirmed at this stage.</small>
-        </form>
+        </form></div>
       </div>
-      <div className="wrap heroFoot"><span>DISCOVER</span><i/><span>CONFIRM</span><i/><span>TRAVEL</span></div>
+      <div className="wrap heroFoot"><span>DESIGNED FOR THE WAY INDIA TRAVELS</span><i/><span>OUTSTATION · AIRPORT · HOURLY · TOURS</span></div>
     </section>
 
     <section className="assurance"><div className="wrap assuranceGrid"><div><b>Travel, without the guesswork.</b><small>A clear process from enquiry to drop-off.</small></div><div><strong>01</strong><span>Thoughtful vehicle matching</span></div><div><strong>02</strong><span>Local operator network</span></div><div><strong>03</strong><span>Coordinated trip support</span></div></div></section>
