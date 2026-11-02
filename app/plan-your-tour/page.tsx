@@ -23,7 +23,9 @@ type ItineraryActivity = {
 
 type ItineraryDay = {
   dayNumber: number;
+  dateLabel: string | null;
   city: CitySeed | null;
+  transferFrom: string;
   isTransfer: boolean;
   isFinalDay: boolean;
   activities: ItineraryActivity[];
@@ -62,44 +64,60 @@ function buildItinerary(
   stops: TourStop[],
   selectedAttractions: Record<string, string[]>,
   style: TourStyle,
+  startPoint: string,
+  travelDate: string,
 ): ItineraryDay[] {
   const capacity = style === "Relaxed" ? 2 : style === "Balanced" ? 3 : 4;
   const days: ItineraryDay[] = [];
+  const startDate = travelDate ? new Date(`${travelDate}T12:00:00`) : null;
+  const makeDateLabel = (dayNumber: number) => {
+    if (!startDate || Number.isNaN(startDate.getTime())) return null;
+    const date = new Date(startDate);
+    date.setDate(date.getDate() + dayNumber - 1);
+    return date.toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" });
+  };
   let dayNumber = 1;
 
   stops.forEach((stop, stopIndex) => {
     const city = CITY_SEEDS.find((item) => item.id === stop.cityId);
     if (!city) return;
+    const previousCity = stopIndex > 0
+      ? CITY_SEEDS.find((item) => item.id === stops[stopIndex - 1].cityId)
+      : null;
+    const transferFrom = previousCity?.name ?? (stopIndex === 0 ? startPoint.trim() : "");
     const selectedIds = selectedAttractions[city.id] ?? [];
     const selected = city.attractions.filter((item) => selectedIds.includes(item.id));
 
     for (let nightIndex = 0; nightIndex < stop.nights; nightIndex += 1) {
       const start = nightIndex * capacity;
       const activities = selected.slice(start, start + capacity);
-      const scheduledCount = activities.length;
       const unscheduled = nightIndex === stop.nights - 1
         ? Math.max(0, selected.length - (nightIndex + 1) * capacity)
         : 0;
 
       days.push({
         dayNumber,
+        dateLabel: makeDateLabel(dayNumber),
         city,
-        isTransfer: stopIndex > 0 && nightIndex === 0,
+        transferFrom: nightIndex === 0 ? transferFrom : "",
+        isTransfer: nightIndex === 0 && Boolean(transferFrom)
+          && transferFrom.toLowerCase() !== city.name.toLowerCase(),
         isFinalDay: false,
         activities: activities.map((attraction) => ({ attraction, city })),
         unscheduled,
       });
       dayNumber += 1;
-
-      // A one-night stop can only fit one day's activity group. Additional
-      // selected places remain visible as unscheduled rather than disappearing.
-      void scheduledCount;
     }
   });
 
+  const lastCity = stops.length > 0
+    ? CITY_SEEDS.find((item) => item.id === stops[stops.length - 1].cityId)
+    : null;
   days.push({
     dayNumber,
+    dateLabel: makeDateLabel(dayNumber),
     city: null,
+    transferFrom: lastCity?.name ?? startPoint,
     isTransfer: true,
     isFinalDay: true,
     activities: [],
@@ -136,8 +154,8 @@ export default function PlanYourTourPage() {
   const totalNights = stops.reduce((sum, stop) => sum + stop.nights, 0);
   const totalDays = totalNights + 1;
   const itinerary = useMemo(
-    () => buildItinerary(stops, attractionSelections, style),
-    [stops, attractionSelections, style],
+    () => buildItinerary(stops, attractionSelections, style, startPoint, travelDate),
+    [stops, attractionSelections, style, startPoint, travelDate],
   );
 
   const regions = useMemo(
@@ -229,10 +247,11 @@ export default function PlanYourTourPage() {
       }),
       "",
       ...itinerary.map((day) => {
-        if (day.isFinalDay) return `Day ${day.dayNumber}: Final departure / drop — ${finalDrop || "To be confirmed"}`;
-        const heading = day.isTransfer ? "Transfer / arrival" : "Explore";
+        const datePart = day.dateLabel ? ` · ${day.dateLabel}` : "";
+        if (day.isFinalDay) return `Day ${day.dayNumber}${datePart}: Departure from ${day.transferFrom || "last destination"} → ${finalDrop || "final drop to be confirmed"}`;
+        const heading = day.isTransfer ? `Transfer from ${day.transferFrom}` : "Explore";
         const attractions = day.activities.map((activity) => activity.attraction.name).join(", ");
-        return `Day ${day.dayNumber}: ${day.city?.name ?? "Destination"} — ${heading}${attractions ? `: ${attractions}` : ": Sightseeing not selected"}`;
+        return `Day ${day.dayNumber}${datePart}: ${day.city?.name ?? "Destination"} — ${heading}${attractions ? `: ${attractions}` : ": Sightseeing not selected"}`;
       }),
       "",
       "Planning preview only. Route times, access, partner availability and fares require verification.",
@@ -459,7 +478,7 @@ export default function PlanYourTourPage() {
                     <article className={styles.dayCard} key={day.dayNumber}>
                       <div className={styles.dayIndex}><span>DAY</span><b>{String(day.dayNumber).padStart(2, "0")}</b></div>
                       <div className={styles.dayBody}>
-                        {day.isFinalDay ? <><span className={styles.dayType}>FINAL DEPARTURE</span><h3>Departure / final drop</h3><p>Complete the trip and proceed to {finalDrop || "your selected drop point"}.</p></> : <><span className={styles.dayType}>{day.isTransfer ? "TRANSFER / ARRIVAL" : "SIGHTSEEING DAY"}</span><h3>{day.city?.name}</h3>{day.isTransfer && <p>Travel into {day.city?.name}. The road route and journey time require verification.</p>}{day.activities.length > 0 ? <ul>{day.activities.map(({ attraction }) => <li key={attraction.id}><span>{attraction.name}</span><small>{attraction.suggestedVisitMinutes} min suggested</small></li>)}</ul> : <p className={styles.mutedActivity}>No sightseeing selected for this day. You can go back and add places.</p>}{day.unscheduled > 0 && <div className={styles.warningText}>{day.unscheduled} selected place(s) still need time. Add a night or reduce the selection.</div>}<div className={styles.overnightLabel}>OVERNIGHT · {day.city?.name}</div></>}
+                        {day.isFinalDay ? <><span className={styles.dayType}>FINAL DEPARTURE</span><small className={styles.dayDate}>{day.dateLabel ?? "Date flexible"}</small><h3>Departure / final drop</h3><p>Travel from {day.transferFrom || "your last destination"} to {finalDrop || "your selected drop point"}. Route time requires verification.</p></> : <><span className={styles.dayType}>{day.isTransfer ? "TRANSFER / ARRIVAL" : "SIGHTSEEING DAY"}</span><small className={styles.dayDate}>{day.dateLabel ?? "Date flexible"}</small><h3>{day.city?.name}</h3>{day.isTransfer && <p>Travel from {day.transferFrom} into {day.city?.name}. The road route and journey time require verification.</p>}{day.activities.length > 0 ? <ul>{day.activities.map(({ attraction }) => <li key={attraction.id}><span>{attraction.name}</span><small>{attraction.suggestedVisitMinutes} min suggested</small></li>)}</ul> : <p className={styles.mutedActivity}>No sightseeing selected for this day. You can go back and add places.</p>}{day.unscheduled > 0 && <div className={styles.warningText}>{day.unscheduled} selected place(s) still need time. Add a night or reduce the selection.</div>}<div className={styles.overnightLabel}>OVERNIGHT · {day.city?.name}</div></>}
                       </div>
                     </article>
                   ))}
