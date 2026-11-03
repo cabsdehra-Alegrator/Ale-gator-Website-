@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import type { FormEvent } from "react";
 import {
   CITY_SEEDS,
+  ROUTE_CONNECTIONS,
   TOUR_INTERESTS,
   TOUR_STYLES,
   type AttractionSeed,
@@ -133,6 +134,7 @@ export default function PlanYourTourPage() {
   const [region, setRegion] = useState("All regions");
   const [stops, setStops] = useState<TourStop[]>([]);
   const [attractionSelections, setAttractionSelections] = useState<Record<string, string[]>>({});
+  const [activityDayOverrides, setActivityDayOverrides] = useState<Record<string, number>>({});
   const [startPoint, setStartPoint] = useState("");
   const [finalDrop, setFinalDrop] = useState("");
   const [travelDate, setTravelDate] = useState("");
@@ -153,10 +155,35 @@ export default function PlanYourTourPage() {
   );
   const totalNights = stops.reduce((sum, stop) => sum + stop.nights, 0);
   const totalDays = totalNights + 1;
-  const itinerary = useMemo(
+  const baseItinerary = useMemo(
     () => buildItinerary(stops, attractionSelections, style, startPoint, travelDate),
     [stops, attractionSelections, style, startPoint, travelDate],
   );
+  const itinerary = useMemo(() => {
+    const days = baseItinerary.map((day) => ({ ...day, activities: [...day.activities] }));
+    const dayByNumber = new Map(days.map((day) => [day.dayNumber, day]));
+    for (const day of days) {
+      day.activities = day.activities.filter(({ attraction }) => {
+        const targetDay = activityDayOverrides[attraction.id];
+        if (!targetDay || targetDay === day.dayNumber) return true;
+        const target = dayByNumber.get(targetDay);
+        if (!target || target.city?.id !== day.city?.id) return true;
+        target.activities.push({ attraction, city: day.city! });
+        return false;
+      });
+    }
+    return days;
+  }, [baseItinerary, activityDayOverrides]);
+
+  const routeChecks = useMemo(() => stops.slice(1).map((stop, index) => {
+    const from = stops[index].cityId;
+    const to = stop.cityId;
+    const edge = ROUTE_CONNECTIONS.find((route) =>
+      (route.fromCityId === from && route.toCityId === to)
+      || (route.fromCityId === to && route.toCityId === from)
+    );
+    return { from, to, edge, verified: edge?.verificationStatus === "source_verified" };
+  }), [stops]);
 
   const regions = useMemo(
     () => ["All regions", ...Array.from(new Set(CITY_SEEDS.map((city) => city.stateName)))],
@@ -214,6 +241,20 @@ export default function PlanYourTourPage() {
         ? selected.filter((id) => id !== attractionId)
         : [...selected, attractionId];
       return { ...current, [cityId]: next };
+    });
+  }
+
+  function moveActivity(attractionId: string, cityId: string, currentDay: number, direction: -1 | 1) {
+    const target = itinerary.find((day) => day.dayNumber === currentDay + direction);
+    if (!target || target.city?.id !== cityId) return;
+    setActivityDayOverrides((current) => ({ ...current, [attractionId]: target.dayNumber }));
+  }
+
+  function resetActivityDay(attractionId: string) {
+    setActivityDayOverrides((current) => {
+      const next = { ...current };
+      delete next[attractionId];
+      return next;
     });
   }
 
@@ -478,10 +519,18 @@ export default function PlanYourTourPage() {
                     <article className={styles.dayCard} key={day.dayNumber}>
                       <div className={styles.dayIndex}><span>DAY</span><b>{String(day.dayNumber).padStart(2, "0")}</b></div>
                       <div className={styles.dayBody}>
-                        {day.isFinalDay ? <><span className={styles.dayType}>FINAL DEPARTURE</span><small className={styles.dayDate}>{day.dateLabel ?? "Date flexible"}</small><h3>Departure / final drop</h3><p>Travel from {day.transferFrom || "your last destination"} to {finalDrop || "your selected drop point"}. Route time requires verification.</p></> : <><span className={styles.dayType}>{day.isTransfer ? "TRANSFER / ARRIVAL" : "SIGHTSEEING DAY"}</span><small className={styles.dayDate}>{day.dateLabel ?? "Date flexible"}</small><h3>{day.city?.name}</h3>{day.isTransfer && <p>Travel from {day.transferFrom} into {day.city?.name}. The road route and journey time require verification.</p>}{day.activities.length > 0 ? <ul>{day.activities.map(({ attraction }) => <li key={attraction.id}><span>{attraction.name}</span><small>{attraction.suggestedVisitMinutes} min suggested</small></li>)}</ul> : <p className={styles.mutedActivity}>No sightseeing selected for this day. You can go back and add places.</p>}{day.unscheduled > 0 && <div className={styles.warningText}>{day.unscheduled} selected place(s) still need time. Add a night or reduce the selection.</div>}<div className={styles.overnightLabel}>OVERNIGHT · {day.city?.name}</div></>}
+                        {day.isFinalDay ? <><span className={styles.dayType}>FINAL DEPARTURE</span><small className={styles.dayDate}>{day.dateLabel ?? "Date flexible"}</small><h3>Departure / final drop</h3><p>Travel from {day.transferFrom || "your last destination"} to {finalDrop || "your selected drop point"}. Route time requires verification.</p></> : <><span className={styles.dayType}>{day.isTransfer ? "TRANSFER / ARRIVAL" : "SIGHTSEEING DAY"}</span><small className={styles.dayDate}>{day.dateLabel ?? "Date flexible"}</small><h3>{day.city?.name}</h3>{day.isTransfer && <p>Travel from {day.transferFrom} into {day.city?.name}. The road route and journey time require verification.</p>}{day.activities.length > 0 ? <ul className={styles.editableActivities}>{day.activities.map(({ attraction }) => <li key={attraction.id}><div className={styles.activityInfo}><span>{attraction.name}</span><small>{attraction.suggestedVisitMinutes} min suggested</small></div><div className={styles.activityControls}><button type="button" aria-label={`Move ${attraction.name} earlier`} title="Move to previous day" disabled={!itinerary.some((candidate) => candidate.dayNumber === day.dayNumber - 1 && candidate.city?.id === day.city?.id)} onClick={() => moveActivity(attraction.id, day.city!.id, day.dayNumber, -1)}>↑</button><button type="button" aria-label={`Move ${attraction.name} later`} title="Move to next day" disabled={!itinerary.some((candidate) => candidate.dayNumber === day.dayNumber + 1 && candidate.city?.id === day.city?.id)} onClick={() => moveActivity(attraction.id, day.city!.id, day.dayNumber, 1)}>↓</button><button type="button" aria-label={`Remove ${attraction.name} from itinerary`} title="Remove from plan" onClick={() => { toggleAttraction(day.city!.id, attraction.id); resetActivityDay(attraction.id); }}>×</button></div></li>)}</ul> : <p className={styles.mutedActivity}>No sightseeing selected for this day. You can go back and add places.</p>}{day.unscheduled > 0 && <div className={styles.warningText}>{day.unscheduled} selected place(s) still need time. Add a night or reduce the selection.</div>}<div className={styles.overnightLabel}>OVERNIGHT · {day.city?.name}</div></>}
                       </div>
                     </article>
                   ))}
+                </div>
+                <div className={styles.routeQuality}>
+                  <div className={styles.routeQualityHead}><b>ROUTE CHECK</b><span>{routeChecks.filter((item) => item.verified).length} of {routeChecks.length} verified connections</span></div>
+                  {routeChecks.length === 0 ? <p>Add another destination to review inter-city connections.</p> : routeChecks.map((check) => {
+                    const fromName = CITY_SEEDS.find((city) => city.id === check.from)?.name ?? check.from;
+                    const toName = CITY_SEEDS.find((city) => city.id === check.to)?.name ?? check.to;
+                    return <div className={styles.routeQualityRow} key={`${check.from}-${check.to}`}><span>{fromName} → {toName}</span><b className={check.verified ? styles.routeVerified : styles.routePending}>{check.verified ? "Source verified" : "Needs route verification"}</b><small>{check.edge?.planningNote ?? "No reviewed route connection is stored for this pair yet."}</small></div>;
+                  })}
                 </div>
                 <div className={styles.routeNotice}><b>What is not calculated yet</b><p>Verified road distance and travel time, traffic, seasonal road access, opening hours, permits and partner availability. This is an editable planning draft, not a confirmed operational itinerary.</p></div>
                 <div className={styles.itineraryActions}><button type="button" className={styles.secondaryAction} onClick={copyPlan}>Copy itinerary ↗</button><button type="button" className={styles.primaryAction} onClick={() => setActiveStep(5)}>Continue to cab enquiry <span>→</span></button></div>
