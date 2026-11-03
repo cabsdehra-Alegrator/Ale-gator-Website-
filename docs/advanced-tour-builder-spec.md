@@ -119,9 +119,11 @@ Do not create these database tables as part of this frontend-only phase. Supabas
 5. If no attractions are selected, show an invitation to select places rather than silently invent a sightseeing schedule.
 6. If a city has more attractions than available time, flag the remaining places as unscheduled and preserve the selection.
 7. The final day is a departure/drop day and does not automatically add sightseeing.
-8. Transfer time and road distance remain “not verified” until route-source data is available.
-9. No late-night hill driving recommendation.
-10. Do not claim partner availability, fares or a booking confirmation.
+8. Users can move an activity to an adjacent day within the same destination or remove it from the plan; original destination selections remain editable in the sightseeing step.
+9. Adjacent city pairs are checked against the curated route-connection catalogue. Missing or unverified edges are shown as requiring route review; the builder does not invent distance or duration.
+10. Transfer time and road distance remain “not verified” until route-source data is available.
+11. No late-night hill driving recommendation.
+12. Do not claim partner availability, fares or a booking confirmation.
 
 ## Release acceptance criteria
 
@@ -134,3 +136,13 @@ Do not create these database tables as part of this frontend-only phase. Supabas
 - Desktop and mobile layouts are usable.
 - Cab enquiry summary reuses trip details, but does not send or persist anything in this phase.
 - No Supabase, authentication, admin changes, sitemap or robots configuration are introduced.
+
+
+## Route quality and itinerary editing (frontend phase)
+
+- The itinerary preview supports moving selected attractions to the previous or next day within the same city stay.
+- An attraction can be removed from the generated plan; the Sightseeing step remains the source of truth for selected attractions.
+- The route quality panel checks each adjacent destination pair against `ROUTE_CONNECTIONS` and displays its verification state and planning note.
+- Current route catalogue edges are editorial placeholders with unknown distance and duration. They are not route recommendations or proof of current road access.
+- A later routing phase should add source-backed road distance/time ranges, source URL, checked timestamp, route geometry where licensed, access caveats, and a manual editorial override.
+- Before publishing or quoting, route data must be verified for the selected vehicle class, date/season and relevant local restrictions.
