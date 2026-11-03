@@ -160,3 +160,24 @@
 @media(max-width:420px){.builderWrap{width:calc(100% - 16px)}.mainPanel{padding:14px}.introMeta i{width:12px}.sectionHeading h2{font-size:21px}.destinationArt{width:78px}.destinationInfo{padding:10px}.cardFoot small{font-size:7px}.enquirySummary{grid-template-columns:1fr}.dayCard{grid-template-columns:44px minmax(0,1fr);gap:9px;padding:11px}.dayBody li{align-items:flex-start;flex-direction:column;gap:3px}}
 
 .dayDate{display:block;margin-top:4px;color:#9aa38f;font-size:8px;letter-spacing:.03em}
+
+.editableActivities{display:grid;gap:8px}
+.editableActivities li{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid #edf0e9;padding:7px 0}
+.activityInfo{display:grid;gap:4px;min-width:0}
+.activityInfo>span{font-size:9px;color:#435344}
+.activityInfo>small{font-size:8px;color:#929c8b}
+.activityControls{display:flex;gap:4px;flex-shrink:0}
+.activityControls button{width:23px;height:22px;border:1px solid #e2e8dd;border-radius:4px;background:#fff;color:#60774a;font-size:10px;cursor:pointer}
+.activityControls button:disabled{opacity:.28;cursor:not-allowed}
+.routeQuality{margin:16px 0;border:1px solid #e6ebdf;border-radius:8px;padding:14px;background:#fbfcf8}
+.routeQualityHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+.routeQualityHead b{font-size:8px;letter-spacing:.15em;color:#647b47}
+.routeQualityHead span{font-size:8px;color:#8c9787}
+.routeQuality>p{font-size:9px;color:#899486}
+.routeQualityRow{display:grid;grid-template-columns:1fr auto;gap:5px 10px;padding:10px 0;border-top:1px solid #edf0e9}
+.routeQualityRow>span{font-size:9px;color:#425343;font-weight:700}
+.routeQualityRow>b{font-size:8px;font-weight:800}
+.routeQualityRow>small{grid-column:1/-1;font-size:8px;color:#8a9586;line-height:1.5}
+.routePending{color:#99783d}
+.routeVerified{color:#5d7d3c}
+@media(max-width:420px){.routeQualityRow{grid-template-columns:1fr}.routeQualityRow>b{justify-self:start}}
